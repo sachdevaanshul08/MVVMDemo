@@ -1,48 +1,48 @@
-package com.demo.repository.network
+package com.demo.repository.network.paging
 
-import android.os.Handler
-import android.os.Looper
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
-
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 /**
  *  Thread pools for the application.
  *
  */
 @Singleton
-open class AppExecutors(
-    private val diskIO: Executor,
-    private val networkIO: Executor,
-    private val mainThread: Executor
-) {
+open class AppExecutors(private val diskIO: Executor) {
 
     @Inject
     constructor() : this(
-        Executors.newSingleThreadExecutor(),
-        Executors.newFixedThreadPool(3),
-        MainThreadExecutor()
+        Executors.newSingleThreadExecutor()
     )
 
-    fun diskIO(): Executor {
+    fun diskIOExecutor(): Executor {
         return diskIO
     }
 
-    fun networkIO(): Executor {
-        return networkIO
-    }
-
-    fun mainThread(): Executor {
-        return mainThread
-    }
-
-    private class MainThreadExecutor : Executor {
-        private val mainThreadHandler = Handler(Looper.getMainLooper())
-        override fun execute(command: Runnable) {
-            mainThreadHandler.post(command)
+    fun diskIO(task: NewTask, scope: CoroutineScope?) {
+        scope?.launch {
+            performIoOperations(task)
         }
     }
+
+    private suspend fun performIoOperations(task: NewTask) {
+        withContext(Dispatchers.IO) {
+            task.executeTask()
+        }
+    }
+
+    private suspend fun mainThread(task: NewTask) {
+        withContext(Dispatchers.Main) {
+            task.executeTask()
+        }
+    }
+
+
 }

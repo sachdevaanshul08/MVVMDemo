@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
-import com.demo.constant.Status
+import com.demo.util.Status
 import com.demo.databinding.NetworkStateItemBinding
-import com.demo.repository.NetworkState
+import com.demo.repository.network.paging.NetworkState
 
 
 /**

@@ -1,11 +1,12 @@
-package com.demo.repository.network
+package com.demo.repository.network.paging
 
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
 import com.androidx.paging.PagingRequestHelper
-import com.demo.repository.local.UserData
-import com.demo.repository.network.user.api.UserApi
-import com.demo.util.*
+import com.demo.repository.local.DeliveryData
+import com.demo.repository.network.user.api.DeliveryApi
+import com.demo.util.createStatusLiveData
+import kotlinx.coroutines.CoroutineScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,14 +18,15 @@ import retrofit2.Response
  * The boundary callback might be called multiple times for the same direction so it does its own
  * rate limiting using the PagingRequestHelper class.
  */
-class UserBoundayCallback(
-    private val webservice: UserApi,
-    private val handleResponse: (Int, List<UserData>?) -> Unit,
+class DataBoundayCallback(
+    private val webservice: DeliveryApi,
+    private val handleResponse: (Int, List<DeliveryData>?) -> Unit,
     private val appExecutors: AppExecutors,
-    private val networkPageSize: Int
-) : PagedList.BoundaryCallback<UserData>() {
+    private val networkPageSize: Int,
+    private val scope: CoroutineScope?
+) : PagedList.BoundaryCallback<DeliveryData>() {
 
-    val helper = PagingRequestHelper(appExecutors.diskIO())
+    val helper = PagingRequestHelper(appExecutors.diskIOExecutor())
     val networkState = helper.createStatusLiveData()
 
     /**
@@ -41,7 +43,7 @@ class UserBoundayCallback(
      * User reached to the end of the list.
      */
     @MainThread
-    override fun onItemAtEndLoaded(itemAtEnd: UserData) {
+    override fun onItemAtEndLoaded(itemAtEnd: DeliveryData) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             fetchFromNetwork(itemAtEnd.indexInResponse + 1, networkPageSize, it)
         }
@@ -53,15 +55,16 @@ class UserBoundayCallback(
      */
     private fun insertItemsIntoDb(
         offset: Int,
-        response: List<UserData>?
+        response: List<DeliveryData>?
     ) {
-        appExecutors.diskIO().execute {
-            handleResponse(offset, response)
-
-        }
+        appExecutors.diskIO(object : NewTask {
+            override fun executeTask() {
+                handleResponse(offset, response)
+            }
+        }, scope)
     }
 
-    override fun onItemAtFrontLoaded(itemAtFront: UserData) {
+    override fun onItemAtFrontLoaded(itemAtFront: DeliveryData) {
         // ignored, since we only ever append to what's in the DB
     }
 
@@ -70,18 +73,19 @@ class UserBoundayCallback(
         limit: Int,
         it: PagingRequestHelper.Request.Callback
     ) {
-        webservice.getUserData(
+        webservice.getDeliveryData(
             offset,
             limit
         ).enqueue(
-            object : Callback<List<UserData>> {
-                override fun onFailure(call: Call<List<UserData>>, t: Throwable) {
+            object : Callback<List<DeliveryData>> {
+                override fun onFailure(call: Call<List<DeliveryData>>, t: Throwable) {
                     // retrofit calls this on main thread so safe to call set value
                     it.recordFailure(t)
                 }
+
                 override fun onResponse(
-                    call: Call<List<UserData>>,
-                    response: Response<List<UserData>>
+                    call: Call<List<DeliveryData>>,
+                    response: Response<List<DeliveryData>>
                 ) {
                     insertItemsIntoDb(offset, response.body())
                     it.recordSuccess()

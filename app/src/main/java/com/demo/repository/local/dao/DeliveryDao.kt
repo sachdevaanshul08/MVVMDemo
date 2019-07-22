@@ -6,23 +6,23 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.demo.repository.local.UserData
+import com.demo.repository.local.DeliveryData
 
 @Dao
-interface UserDataDao {
+interface DeliveryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(userData: List<UserData>)
+    fun insert(deliveryData: List<DeliveryData>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(userData: UserData)
+    fun insert(deliveryData: DeliveryData)
 
     @Query("SELECT * FROM userdata LIMIT :limit OFFSET :offset")
-    fun getUserDataChunk(offset: Int, limit: Int): LiveData<List<UserData>>
+    fun getUserDataChunk(offset: Int, limit: Int): LiveData<List<DeliveryData>>
 
     @Query("DELETE FROM userdata")
     fun delete()
 
     @Query("SELECT * FROM userdata ORDER BY indexInResponse ASC")
-    fun getUser(): DataSource.Factory<Int, UserData>
+    fun getUser(): DataSource.Factory<Int, DeliveryData>
 }

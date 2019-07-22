@@ -4,8 +4,7 @@
 
     <data>
         <import type="android.text.TextUtils"/>
-        <import type="com.demo.constant.Status"/>
-        <import type="com.demo.constant.Constants"/>
+        <import type="com.demo.util.Status"/>
     </data>
 
 
@@ -31,6 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Retry"/>
+                android:text="@string/retry"/>
     </LinearLayout>
 </layout>

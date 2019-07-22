@@ -3,7 +3,7 @@ package com.demo.util
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.androidx.paging.PagingRequestHelper
-import com.demo.repository.NetworkState
+import com.demo.repository.network.paging.NetworkState
 
 private fun getErrorMessage(report: PagingRequestHelper.StatusReport): String {
     return PagingRequestHelper.RequestType.values().mapNotNull {

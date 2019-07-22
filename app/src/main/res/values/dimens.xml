@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_margin">8dp</dimen>
+    <dimen name="default_heading_size">20sp</dimen>
+    <dimen name="default_description_size">18sp</dimen>
 
-    <dimen name="image_size">90dp</dimen>
+    <!-- Main screen list item image size-->
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="main_tv_height">100dp</dimen>
 
+    <!-- Details screen dimensions-->
+    <dimen name="details_tv_height">40dp</dimen>
+    <dimen name="image_height">200dp</dimen>
 </resources>

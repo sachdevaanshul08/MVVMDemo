@@ -5,16 +5,16 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
-import com.demo.repository.NetworkState
-import com.demo.repository.local.UserData
+import com.demo.repository.local.DeliveryData
+import com.demo.repository.network.paging.NetworkState
 
 /**
  * A simple adapter implementation that shows Reddit posts.
  */
 class UserListAdapter(
-    private val onItemClick: (UserData?) -> Unit,
+    private val onItemClick: (DeliveryData?) -> Unit,
     private val retryCallback: () -> Unit
-) : PagedListAdapter<UserData, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+) : PagedListAdapter<DeliveryData, RecyclerView.ViewHolder>(POST_COMPARATOR) {
     private var networkState: NetworkState? = null
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
@@ -77,11 +77,11 @@ class UserListAdapter(
     }
 
     companion object {
-        val POST_COMPARATOR = object : DiffUtil.ItemCallback<UserData>() {
-            override fun areContentsTheSame(oldItem: UserData, newItem: UserData): Boolean =
+        val POST_COMPARATOR = object : DiffUtil.ItemCallback<DeliveryData>() {
+            override fun areContentsTheSame(oldItem: DeliveryData, newItem: DeliveryData): Boolean =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: UserData, newItem: UserData): Boolean =
+            override fun areItemsTheSame(oldItem: DeliveryData, newItem: DeliveryData): Boolean =
                 oldItem.id == newItem.id
         }
     }

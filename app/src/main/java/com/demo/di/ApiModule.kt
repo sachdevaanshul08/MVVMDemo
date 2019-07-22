@@ -1,7 +1,8 @@
 package com.demo.di
 
 import android.app.Application
-import com.demo.repository.network.user.api.UserApi
+import com.demo.BuildConfig
+import com.demo.repository.network.user.api.DeliveryApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -11,10 +12,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-import javax.inject.Singleton
 import java.io.File
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
 @Module
@@ -49,15 +49,18 @@ class ApiModule {
     @Provides
     @Singleton
     internal fun provideOkhttpClient(cache: Cache): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
 
         val httpClient = OkHttpClient.Builder()
         httpClient.cache(cache)
-        httpClient.addInterceptor(logging)
-        //httpClient.addNetworkInterceptor(RequestInterceptor())
-        httpClient.connectTimeout(30, TimeUnit.SECONDS)
-        httpClient.readTimeout(30, TimeUnit.SECONDS)
+        if (BuildConfig.DEBUG) {
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
+            httpClient.addInterceptor(logging)
+        }
+        //Following values can be overrideen by the apis response if there is any change in the timeout.
+        //That logic can be added here.
+        httpClient.connectTimeout(BuildConfig.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        httpClient.readTimeout(BuildConfig.READ_TIMEOUT, TimeUnit.SECONDS)
         return httpClient.build()
     }
 
@@ -70,7 +73,7 @@ class ApiModule {
     internal fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("https://mock-api-mobile.dev.lalamove.com/")
+            .baseUrl(BuildConfig.BASEURL)
             .client(okHttpClient)
             .build()
     }
@@ -78,12 +81,12 @@ class ApiModule {
 
     /*
      *
-     *to get the userApi we need retrofit, okHttpClient, cache and Gson object.
+     *to get the deliveryApi we need retrofit, okHttpClient, cache and Gson object.
      * so all has been injected via dagger2
      * */
     @Provides
     @Singleton
-    internal fun provideUserApi(retrofit: Retrofit): UserApi {
-        return retrofit.create(UserApi::class.java)
+    internal fun provideUserApi(retrofit: Retrofit): DeliveryApi {
+        return retrofit.create(DeliveryApi::class.java)
     }
 }

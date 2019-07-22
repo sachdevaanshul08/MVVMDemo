@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "userdata")
-data class UserData(
+data class DeliveryData(
 
     @PrimaryKey val id: Int,
 
@@ -24,21 +24,21 @@ data class UserData(
 
 // to be consistent w/ changing backend order, we need to keep a data like this
     var indexInResponse: Int = -1
-): Parcelable{
+) : Parcelable {
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<UserData> = object : Parcelable.Creator<UserData> {
-            override fun createFromParcel(source: Parcel): UserData = UserData(source)
-            override fun newArray(size: Int): Array<UserData?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<DeliveryData> = object : Parcelable.Creator<DeliveryData> {
+            override fun createFromParcel(source: Parcel): DeliveryData = DeliveryData(source)
+            override fun newArray(size: Int): Array<DeliveryData?> = arrayOfNulls(size)
         }
     }
 
-    constructor(source: Parcel): this(
-    source.readInt(),
-    source.readString(),
-    source.readString(),
-    source.readParcelable<LocationData>(LocationData::class.java.classLoader),
-    source.readInt()
+    constructor(source: Parcel) : this(
+        source.readInt(),
+        source.readString(),
+        source.readString(),
+        source.readParcelable<LocationData>(LocationData::class.java.classLoader),
+        source.readInt()
     )
 
     override fun describeContents() = 0

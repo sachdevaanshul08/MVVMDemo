@@ -1,4 +1,4 @@
-package com.demo.repository
+package com.demo.repository.network.paging
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

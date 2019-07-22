@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: '../config/appconfig.gradle'
+
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
@@ -17,7 +19,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "BASEURL", BASEURL_DEBUG
+        }
         release {
+            buildConfigField "String", "BASEURL", BASEURL_RELEASE
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -25,7 +31,12 @@ android {
     dataBinding {
         enabled = true
     }
+    flavorDimensions "default"
+    productFlavors {
 
+        dev {
+        }
+    }
 }
 
 dependencies {
@@ -37,7 +48,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    implementation "com.android.support:appcompat-v7:28.0.0"
     def room_version = "2.1.0" // 2.1.0 for latest stable version
 
     implementation "androidx.room:room-runtime:$room_version"
@@ -70,7 +81,7 @@ dependencies {
     def lifecycle_version = "2.0.0"
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-
+    //implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version" // For Kotlin use kapt instead of annotationProcessor
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     //implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
@@ -94,4 +105,11 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
     implementation 'com.google.android.material:material:1.0.0'
+
+    //Map
+    implementation 'com.google.android.gms:play-services:12.0.1'
+
+    def coroutines_version = "1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
 }

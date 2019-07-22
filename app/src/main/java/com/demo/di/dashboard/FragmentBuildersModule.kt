@@ -6,11 +6,11 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class FragmentBuildersModule{
+abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeHomeFragment():HomeFragment
+    abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeDetailsFragment():DetailFragment
+    abstract fun contributeDetailsFragment(): DetailFragment
 }

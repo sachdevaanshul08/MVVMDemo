@@ -22,18 +22,16 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
     @get:LayoutRes
     abstract val layoutId: Int
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate<T>(inflater, layoutId, container, false)
         mRootView = binding.root
         return mRootView
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.setLifecycleOwner(this)
-        binding.executePendingBindings()
+        //binding.executePendingBindings()
         onViewCreation(savedInstanceState)
     }
 

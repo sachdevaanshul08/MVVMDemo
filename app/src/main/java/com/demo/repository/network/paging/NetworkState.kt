@@ -1,10 +1,11 @@
-package com.demo.repository
+package com.demo.repository.network.paging
 
-import com.demo.constant.Status
+import com.demo.util.Status
 
-data class NetworkState private constructor(
+data class NetworkState constructor(
     val status: Status,
-    val msg: String? = null) {
+    val msg: String? = null
+) {
     companion object {
         val LOADED = NetworkState(Status.SUCCESS)
         val LOADING = NetworkState(Status.RUNNING)

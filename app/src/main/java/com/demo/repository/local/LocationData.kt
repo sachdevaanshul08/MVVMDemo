@@ -3,13 +3,12 @@ package com.demo.repository.local
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-data class LocationData (
-    @SerializedName("lat") val lat : Double,
-    @SerializedName("lng") val lng : Double,
-    @SerializedName("address") val address : String
-) : Parcelable{
+data class LocationData(
+    @SerializedName("lat") val lat: Double,
+    @SerializedName("lng") val lng: Double,
+    @SerializedName("address") val address: String
+) : Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<LocationData> = object : Parcelable.Creator<LocationData> {
@@ -18,10 +17,10 @@ data class LocationData (
         }
     }
 
-    constructor(source: Parcel): this(
-    source.readDouble(),
-    source.readDouble(),
-    source.readString()
+    constructor(source: Parcel) : this(
+        source.readDouble(),
+        source.readDouble(),
+        source.readString()
     )
 
     override fun describeContents() = 0

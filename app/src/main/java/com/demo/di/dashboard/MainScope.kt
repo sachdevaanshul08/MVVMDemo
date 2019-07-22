@@ -4,7 +4,7 @@ import java.lang.annotation.Documented
 import javax.inject.Scope
 
 @Scope
-@Documented
+@MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 annotation class MainScope {
 }

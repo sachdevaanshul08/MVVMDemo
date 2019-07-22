@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="userdata" type="com.demo.repository.local.UserData"/>
+        <variable name="deliverydata" type="com.demo.repository.local.DeliveryData"/>
 
     </data>
-    <LinearLayout
-            android:orientation="vertical"
-            android:background="@android:color/background_light"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        <TextView android:layout_width="match_parent" android:layout_height="40dp"
-                  android:gravity="center"
-                  android:layout_margin="@dimen/default_margin"
-                  android:text="Delivery Details" android:textSize="20sp" android:textColor="@color/colorPrimaryDark"/>
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                           android:background="@android:color/background_light"
+                                           android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ImageView android:layout_width="match_parent" android:layout_height="200dp"
-                   android:src="@drawable/ic_launcher_background"/>
+            <TextView android:layout_width="match_parent" android:layout_height="@dimen/details_tv_height"
+                      android:gravity="center"
+                      android:layout_margin="@dimen/default_margin"
+                      android:text="@string/delivery_details" android:textSize="@dimen/default_heading_size"
+                      android:textColor="@color/colorPrimaryDark"/>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_margin="@dimen/default_margin" android:textSize="18sp"
-                  android:text="@{userdata.description}"
-                  android:gravity="center_horizontal"
-                  android:textColor="@color/design_default_color_primary_dark"/>
-    </LinearLayout>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="200dp"
+                         android:id="@+id/frame_map"/>
 
+            <include layout="@layout/list_item"
+                     bind:delivery="@{deliverydata}"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
