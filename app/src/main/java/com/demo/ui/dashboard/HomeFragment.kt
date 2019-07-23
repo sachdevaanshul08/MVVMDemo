@@ -12,6 +12,7 @@ import com.demo.repository.local.DeliveryData
 import com.demo.repository.network.paging.NetworkState
 import com.demo.ui.dashboard.base.BaseFragment
 import com.demo.ui.dashboard.common.UserListAdapter
+import com.demo.util.Status
 import com.demo.viewmodels.ViewModelFactory
 import javax.inject.Inject
 
@@ -44,6 +45,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initSwipeToRefresh(deliveryMainViewModel: DeliveryMainViewModel) {
         deliveryMainViewModel.refreshState.observe(this, Observer {
             binding.swipeRefresh.isRefreshing = it == NetworkState.LOADING
+            if (it.status == Status.FAILED) showSnackBar(binding.root, it.msg!!)
         })
         binding.swipeRefresh.setOnRefreshListener {
             deliveryMainViewModel.refresh()

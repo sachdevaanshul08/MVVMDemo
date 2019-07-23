@@ -32,7 +32,7 @@ class UserDataViewHolder(view: View, listItemBinding: ListItemBinding, private v
 
     companion object {
         fun create(parent: ViewGroup, onItemClick: (DeliveryData?) -> Unit): UserDataViewHolder {
-            val binding: ListItemBinding = DataBindingUtil.inflate<ListItemBinding>(
+            val binding: ListItemBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.list_item,
                 parent,

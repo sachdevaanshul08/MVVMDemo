@@ -10,5 +10,5 @@
 
     <!-- Details screen dimensions-->
     <dimen name="details_tv_height">40dp</dimen>
-    <dimen name="image_height">200dp</dimen>
+    <dimen name="map_height">200dp</dimen>
 </resources>

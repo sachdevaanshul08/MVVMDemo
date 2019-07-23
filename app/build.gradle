@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 apply from: '../config/appconfig.gradle'
+apply from: '../config/lintanalyzer.gradle'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -78,7 +79,7 @@ dependencies {
 
     //glide
     implementation deps.glide.core
-    annotationProcessor deps.glide.compiler
+    kapt deps.glide.compiler
 
     //appcompat, Recyclerview and cardview
     implementation deps.support_library.appcompat

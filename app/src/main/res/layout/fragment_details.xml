@@ -19,7 +19,7 @@
                       android:text="@string/delivery_details" android:textSize="@dimen/default_heading_size"
                       android:textColor="@color/colorPrimaryDark"/>
 
-            <FrameLayout android:layout_width="match_parent" android:layout_height="200dp"
+            <FrameLayout android:layout_width="match_parent" android:layout_height="@dimen/map_height"
                          android:id="@+id/frame_map"/>
 
             <include layout="@layout/list_item"

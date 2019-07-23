@@ -1,4 +1,4 @@
-package com.demo.di;
+package com.demo.di
 
 
 import androidx.lifecycle.ViewModel

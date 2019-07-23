@@ -3,9 +3,9 @@
 
     <!-- Details screen strings-->
     <string name="delivery_details">Delivery Details</string>
-    <string name="image_description">Coordinates Location</string>
 
     <!-- Main screen lis item strings-->
     <string name="main_list_item_image">Image Description</string>
     <string name="retry">Retry</string>
+
 </resources>

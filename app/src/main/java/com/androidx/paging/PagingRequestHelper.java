@@ -301,6 +301,7 @@ public class PagingRequestHelper {
          *
          * @param callback The callback that should be invoked with the result.
          */
+        @NonNull
         void run(Callback callback);
 
         /**

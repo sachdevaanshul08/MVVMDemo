@@ -87,8 +87,12 @@ class DataBoundayCallback(
                     call: Call<List<DeliveryData>>,
                     response: Response<List<DeliveryData>>
                 ) {
-                    insertItemsIntoDb(offset, response.body())
-                    it.recordSuccess()
+                    if (response.code() == 200) {
+                        insertItemsIntoDb(offset, response.body())
+                        it.recordSuccess()
+                    } else {
+                        onFailure(call, Throwable(response.message()))
+                    }
                 }
             }
         )

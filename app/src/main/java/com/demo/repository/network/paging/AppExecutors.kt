@@ -1,5 +1,6 @@
 package com.demo.repository.network.paging
 
+import android.annotation.SuppressLint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -8,7 +9,6 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.CoroutineContext
 
 /**
  *  Thread pools for the application.
@@ -38,6 +38,7 @@ open class AppExecutors(private val diskIO: Executor) {
         }
     }
 
+    @SuppressLint("unused")
     private suspend fun mainThread(task: NewTask) {
         withContext(Dispatchers.Main) {
             task.executeTask()

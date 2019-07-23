@@ -1,0 +1,19 @@
+
+//Make it "True" If you want the build failed if lint criteria doesn't met
+def EXIT_ON_FAILURE_CHECK = true
+
+android {
+
+    lintOptions {
+        //lintConfig file('./lint.xml')
+        abortOnError EXIT_ON_FAILURE_CHECK
+        // if true, only report errors
+        ignoreWarnings EXIT_ON_FAILURE_CHECK
+
+        xmlReport false
+        htmlReport true
+        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+    }
+
+}

@@ -26,7 +26,7 @@ class NetworkStateViewHolder(
         networkStateItemBinding.retryButton.setOnClickListener {
             retryCallback()
         }
-        this.binding = networkStateItemBinding;
+        this.binding = networkStateItemBinding
     }
 
     fun bind(networkState: NetworkState?) {
@@ -46,7 +46,7 @@ class NetworkStateViewHolder(
 
     companion object {
         fun create(parent: ViewGroup, retryCallback: () -> Unit): NetworkStateViewHolder {
-            val binding: NetworkStateItemBinding = DataBindingUtil.inflate<NetworkStateItemBinding>(
+            val binding: NetworkStateItemBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.network_state_item,
                 parent,
