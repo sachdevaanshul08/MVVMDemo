@@ -16,7 +16,7 @@ class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSour
     private val repoResult = map(index) {
         repository.getUserByRange(it, BuildConfig.PAGE_SIZE)
     }
-    val usersData = switchMap(repoResult, { it.pagedList })!!
+    val usersData = switchMap(repoResult) { it.pagedList }!!
     val networkState = switchMap(repoResult, { it.networkState })!!
     val refreshState = switchMap(repoResult, { it.refreshState })!!
 

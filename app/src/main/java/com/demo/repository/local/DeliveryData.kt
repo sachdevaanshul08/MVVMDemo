@@ -4,13 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "userdata")
+@Entity(tableName = "userdata", primaryKeys = ["id", "indexInResponse"])
 data class DeliveryData(
 
-    @PrimaryKey val id: Int,
+    val id: Int,
 
     @SerializedName("description")
     @ColumnInfo(name = "description") val description: String?,

@@ -14,9 +14,6 @@ interface DeliveryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(deliveryData: List<DeliveryData>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(deliveryData: DeliveryData)
-
     @Query("SELECT * FROM userdata LIMIT :limit OFFSET :offset")
     fun getUserDataChunk(offset: Int, limit: Int): LiveData<List<DeliveryData>>
 

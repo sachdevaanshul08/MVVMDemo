@@ -123,7 +123,7 @@ class DeliveryDataSourceFactory @Inject constructor(
              boundaryCallback = boundaryCallback
          )*/
         val config = PagedList.Config.Builder()
-            .setPageSize(pageSize).setInitialLoadSizeHint(pageSize * 2).setPrefetchDistance(pageSize)
+            .setPageSize(pageSize).setPrefetchDistance(pageSize / 5)
             .setEnablePlaceholders(false)
             .build()
         val livePagedList =
