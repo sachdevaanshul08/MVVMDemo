@@ -48,7 +48,10 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
         return mRootView
     }
 
-    fun visibleNow() {
+    /**
+     * This function triggers when fragment is visible again after returning from some other fragment
+     */
+    fun visibleAgain() {
         setTitle(parentActivity?.resources?.getString(title))
     }
 

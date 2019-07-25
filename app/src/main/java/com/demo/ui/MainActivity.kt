@@ -62,7 +62,7 @@ class MainActivity : DaggerAppCompatActivity() {
         while (listIterator.hasPrevious()) {
             val fragment = listIterator.previous()
             if (fragment is BaseFragment<*>) {
-                fragment.visibleNow()
+                fragment.visibleAgain()
                 break;
             }
         }
