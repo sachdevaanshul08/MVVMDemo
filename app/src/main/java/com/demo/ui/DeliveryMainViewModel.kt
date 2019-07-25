@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard
+package com.demo.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map

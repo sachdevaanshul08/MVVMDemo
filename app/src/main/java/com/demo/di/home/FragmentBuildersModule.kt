@@ -1,7 +1,7 @@
-package com.demo.di.dashboard
+package com.demo.di.home
 
-import com.demo.ui.dashboard.DetailFragment
-import com.demo.ui.dashboard.HomeFragment
+import com.demo.ui.DetailFragment
+import com.demo.ui.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

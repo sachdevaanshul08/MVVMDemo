@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard
+package com.demo.ui
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -10,8 +10,8 @@ import com.demo.constant.Constants
 import com.demo.databinding.FragmentHomeBinding
 import com.demo.repository.local.DeliveryData
 import com.demo.repository.network.paging.NetworkState
-import com.demo.ui.dashboard.base.BaseFragment
-import com.demo.ui.dashboard.common.UserListAdapter
+import com.demo.ui.base.BaseFragment
+import com.demo.ui.adapters.DeliveryListAdapter
 import com.demo.util.Status
 import com.demo.viewmodels.ViewModelFactory
 import javax.inject.Inject
@@ -32,6 +32,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override val layoutId: Int
         get() = R.layout.fragment_home
+
+    override val title: Int
+        get() = R.string.title_home_screen
+
 
     override fun onViewCreation(savedInstanceState: Bundle?) {
         val deliveryMainViewModel = getViewModel()
@@ -71,7 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initAdapter(deliveryMainViewModel: DeliveryMainViewModel) {
 
-        val adapter = UserListAdapter(::onItemClick) {
+        val adapter = DeliveryListAdapter(::onItemClick) {
             deliveryMainViewModel.retry()
         }
         binding.recyclerView.adapter = adapter
@@ -87,5 +91,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             adapter.setNetworkState(it)
         })
     }
-
 }

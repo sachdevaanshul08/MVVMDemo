@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard
+package com.demo.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,7 @@ import com.demo.R
 import com.demo.constant.Constants
 import com.demo.databinding.FragmentDetailsBinding
 import com.demo.repository.local.DeliveryData
-import com.demo.ui.dashboard.base.BaseFragment
+import com.demo.ui.base.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -21,6 +21,9 @@ class DetailFragment : BaseFragment<FragmentDetailsBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_details
 
+    override val title: Int
+        get() = R.string.title_Delivery_screen
+
     override fun onViewCreation(savedInstanceState: Bundle?) {
         //arguments[]
         val deliveryData = arguments?.getParcelable<DeliveryData>(Constants.DELIVERY_DATA)
@@ -28,11 +31,11 @@ class DetailFragment : BaseFragment<FragmentDetailsBinding>() {
         binding.deliverydata = deliveryData
     }
 
+
     override fun onResume() {
         super.onResume()
-        val activitInstance: MainActivity? = activity as MainActivity
-        activitInstance?.showBackButton(activitInstance.isBackButtonRequired())
-
+        val activityInstance: MainActivity? = activity as MainActivity
+        activityInstance?.showBackButton(activityInstance.isBackButtonRequired())
     }
 
     private fun setupMap(deliveryData: DeliveryData?) {
@@ -55,4 +58,5 @@ class DetailFragment : BaseFragment<FragmentDetailsBinding>() {
     companion object {
         fun newInstance() = DetailFragment()
     }
+
 }

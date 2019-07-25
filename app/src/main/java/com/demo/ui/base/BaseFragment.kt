@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard.base
+package com.demo.ui.base
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -20,7 +21,6 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
 
     private var mRootView: View? = null
     var binding by autoCleared<T>()
-
 
     private var parentActivity: AppCompatActivity? = null
 
@@ -38,10 +38,23 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
     @get:LayoutRes
     abstract val layoutId: Int
 
+    @get:StringRes
+    abstract val title: Int
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         mRootView = binding.root
         return mRootView
+    }
+
+    fun visibleNow() {
+        setTitle(parentActivity?.resources?.getString(title))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setTitle(parentActivity?.resources?.getString(title))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +62,13 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
         binding.lifecycleOwner = this
         //binding.executePendingBindings()
         onViewCreation(savedInstanceState)
+    }
+
+    /**
+     * set the title of fragment
+     */
+    private fun setTitle(title: String?) {
+        parentActivity?.supportActionBar?.setTitle(title)
     }
 
     abstract fun onViewCreation(savedInstanceState: Bundle?)

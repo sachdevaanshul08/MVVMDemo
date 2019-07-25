@@ -1,8 +1,8 @@
-package com.demo.di.dashboard
+package com.demo.di.home
 
 import androidx.lifecycle.ViewModel
 import com.demo.di.ViewModelKey
-import com.demo.ui.dashboard.DeliveryMainViewModel
+import com.demo.ui.DeliveryMainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

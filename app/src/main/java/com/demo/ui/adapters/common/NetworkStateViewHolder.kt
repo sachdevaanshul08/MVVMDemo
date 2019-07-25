@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard.common
+package com.demo.ui.adapters.common
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
-import com.demo.util.Status
 import com.demo.databinding.NetworkStateItemBinding
 import com.demo.repository.network.paging.NetworkState
+import com.demo.util.Status
 
 
 /**

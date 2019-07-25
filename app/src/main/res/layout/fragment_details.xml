@@ -13,13 +13,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <TextView android:layout_width="match_parent" android:layout_height="@dimen/details_tv_height"
-                      android:gravity="center"
-                      android:layout_margin="@dimen/default_margin"
-                      android:text="@string/delivery_details" android:textSize="@dimen/default_heading_size"
-                      android:textColor="@color/colorPrimaryDark"/>
-
             <FrameLayout android:layout_width="match_parent" android:layout_height="@dimen/map_height"
+                         android:layout_marginBottom="@dimen/default_margin"
                          android:id="@+id/frame_map"/>
 
             <include layout="@layout/list_item"

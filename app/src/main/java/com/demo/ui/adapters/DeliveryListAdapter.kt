@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard.common
+package com.demo.ui.adapters
 
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
@@ -7,18 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
 import com.demo.repository.local.DeliveryData
 import com.demo.repository.network.paging.NetworkState
+import com.demo.ui.adapters.common.NetworkStateViewHolder
 
 /**
  * A simple adapter implementation that shows Reddit posts.
  */
-class UserListAdapter(
+class DeliveryListAdapter(
     private val onItemClick: (DeliveryData?) -> Unit,
     private val retryCallback: () -> Unit
 ) : PagedListAdapter<DeliveryData, RecyclerView.ViewHolder>(POST_COMPARATOR) {
     private var networkState: NetworkState? = null
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.list_item -> (holder as UserDataViewHolder).bind(getItem(position))
+            R.layout.list_item -> (holder as DeliveryDataViewHolder).bind(getItem(position))
             R.layout.network_state_item -> (holder as NetworkStateViewHolder).bind(
                 networkState
             )
@@ -32,7 +33,7 @@ class UserListAdapter(
     ) {
         if (payloads.isNotEmpty()) {
             val item = getItem(position)
-            (holder as UserDataViewHolder).updateData(item)
+            (holder as DeliveryDataViewHolder).updateData(item)
         } else {
             onBindViewHolder(holder, position)
         }
@@ -40,8 +41,11 @@ class UserListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.list_item -> UserDataViewHolder.create(parent, onItemClick)
-            R.layout.network_state_item -> NetworkStateViewHolder.create(parent, retryCallback)
+            R.layout.list_item -> DeliveryDataViewHolder.create(parent, onItemClick)
+            R.layout.network_state_item -> NetworkStateViewHolder.create(
+                parent,
+                retryCallback
+            )
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }

@@ -1,4 +1,4 @@
-package com.demo.di.dashboard
+package com.demo.di.home
 
 import javax.inject.Scope
 

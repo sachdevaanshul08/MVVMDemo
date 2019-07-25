@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">MVVMDemo</string>
+    <string name="app_name">GoodsDelivery</string>
+
+    <string name="title_home_screen">Things to Deliver</string>
 
     <!-- Details screen strings-->
-    <string name="delivery_details">Delivery Details</string>
+    <string name="title_Delivery_screen">Delivery Details</string>
 
     <!-- Main screen lis item strings-->
     <string name="main_list_item_image">Image Description</string>

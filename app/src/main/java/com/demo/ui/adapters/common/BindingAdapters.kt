@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard.common
+package com.demo.ui.adapters.common
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

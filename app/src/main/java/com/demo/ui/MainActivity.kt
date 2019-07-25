@@ -1,4 +1,4 @@
-package com.demo.ui.dashboard
+package com.demo.ui
 
 import android.os.Bundle
 import android.view.View
@@ -6,10 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
+import com.demo.ui.base.BaseFragment
 import dagger.android.support.DaggerAppCompatActivity
 
 
 class MainActivity : DaggerAppCompatActivity() {
+
+    val fragmentTag = "FRAGMENT_TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +37,9 @@ class MainActivity : DaggerAppCompatActivity() {
         })
     }
 
+
     fun openFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().add(R.id.frame_container, fragment, "FRAGMENT_TAG")
+        supportFragmentManager.beginTransaction().add(R.id.frame_container, fragment, fragmentTag)
             .addToBackStack(null).commit()
     }
 
@@ -50,11 +54,26 @@ class MainActivity : DaggerAppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
+    private fun triggerFragmentVisible() {
+        val fragmentList = supportFragmentManager.fragments
+        val listIterator = fragmentList.listIterator(fragmentList.size)
+        // Iterate in reverse.
+        //To Avoid SupportRequestFragmentManager(Added by glide)
+        while (listIterator.hasPrevious()) {
+            val fragment = listIterator.previous()
+            if (fragment is BaseFragment<*>) {
+                fragment.visibleNow()
+                break;
+            }
+        }
+    }
+
     override fun onBackPressed() {
         if (isBackButtonRequired()) {
             supportFragmentManager.popBackStack()
             supportFragmentManager.executePendingTransactions()
             showBackButton(isBackButtonRequired())
+            triggerFragmentVisible()
         } else {
             finish()
         }

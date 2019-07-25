@@ -1,9 +1,9 @@
 package com.demo.di
 
-import com.demo.di.dashboard.DeliveryViewModelModule
-import com.demo.di.dashboard.FragmentBuildersModule
-import com.demo.di.dashboard.MainScope
-import com.demo.ui.dashboard.MainActivity
+import com.demo.di.home.DeliveryViewModelModule
+import com.demo.di.home.FragmentBuildersModule
+import com.demo.di.home.MainScope
+import com.demo.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
