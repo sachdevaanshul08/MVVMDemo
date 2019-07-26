@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.mock.Calls
 import java.io.IOException
 
-class FakeDeliveryApi : DeliveryApi {
+class TestDeliveryApi : DeliveryApi {
 
     private val dataModel = mutableListOf<DeliveryData>()
     var failureMsg: String? = null

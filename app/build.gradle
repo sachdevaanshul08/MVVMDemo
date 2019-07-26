@@ -50,7 +50,6 @@ android {
     }
     sourceSets {
         androidTest.java.srcDirs += "src/commonTest/java"
-        test.java.srcDirs += "src/commonTest/java"
     }
 }
 
@@ -70,7 +69,7 @@ dependencies {
     androidTestImplementation deps.mockito.android
     androidTestImplementation deps.lifecycle.testing
 
-    testImplementation deps.junit
+    //testImplementation deps.junit
     testImplementation deps.mockito.core
     testImplementation deps.room.testing
     testImplementation deps.lifecycle.testing

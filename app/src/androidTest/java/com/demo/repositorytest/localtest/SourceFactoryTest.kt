@@ -9,7 +9,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.demo.FakeDeliveryApi
+import com.demo.TestDeliveryApi
 import com.demo.repository.local.DeliveryData
 import com.demo.repository.local.dao.DeliveryDao
 import com.demo.repository.local.database.DeliveryDatabase
@@ -38,7 +38,7 @@ class SourceFactoryTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val deliveryApi = FakeDeliveryApi()
+    private val deliveryApi = TestDeliveryApi()
     var appExecutors: AppExecutors = AppExecutors(Executors.newSingleThreadExecutor())
     var deliveryDataSourceFactory: DeliveryDataSourceFactory? = null
     var deliveryMainViewModel: DeliveryMainViewModel? = null

@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.demo.FakeDeliveryApi
+import com.demo.TestDeliveryApi
 import com.demo.repository.local.database.DeliveryDatabase
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -25,9 +25,9 @@ class RoomTest {
     @Test
     @Throws(Exception::class)
     fun writeDeliveryTest() {
-        val fakeDeliveryApi = FakeDeliveryApi()
-        fakeDeliveryApi.initiateDataModel(10, "Testing")
-        val rawData = fakeDeliveryApi.getDeliveryDataByRange(0, 10)
+        val testApi = TestDeliveryApi()
+        testApi.initiateDataModel(10, "Testing")
+        val rawData = testApi.getDeliveryDataByRange(0, 10)
         deliveryDao.insert(rawData)
         val tableData = deliveryDao.getAllUser()
         assertEquals(rawData.size, tableData.size)
