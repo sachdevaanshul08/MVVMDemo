@@ -34,14 +34,14 @@ open class AppExecutors(private val diskIO: Executor) {
 
     private suspend fun performIoOperations(task: NewTask) {
         withContext(Dispatchers.IO) {
-            task.executeTask()
+            task.execute()
         }
     }
 
     @SuppressLint("unused")
     private suspend fun mainThread(task: NewTask) {
         withContext(Dispatchers.Main) {
-            task.executeTask()
+            task.execute()
         }
     }
 

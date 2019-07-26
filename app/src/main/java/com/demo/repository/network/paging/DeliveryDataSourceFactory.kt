@@ -78,7 +78,7 @@ class DeliveryDataSourceFactory @Inject constructor(
                     response: Response<List<DeliveryData>>
                 ) {
                     appExecutors.diskIO(object : NewTask {
-                        override fun executeTask() {
+                        override fun execute() {
                             db.runInTransaction {
                                 deliveryDao.delete()
                                 insertResultIntoDb(offset, response.body())
@@ -105,7 +105,7 @@ class DeliveryDataSourceFactory @Inject constructor(
             webservice = deliveryApi,
             handleResponse = this::insertResultIntoDb,
             appExecutors = appExecutors,
-            networkPageSize = networkPageSize,
+            networkPageSize = pageSize,
             scope = scope
         )
         // mutable live data to trigger refresh requests which eventually calls

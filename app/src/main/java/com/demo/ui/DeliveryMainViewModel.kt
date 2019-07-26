@@ -28,8 +28,8 @@ class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSour
 
     /**
      * This is the main scope for all coroutines launched by DeliveryMainViewModel.
-     * Since we pass viewModelJob, you can cancel all coroutines
-     * launched by uiScope by calling viewModelJob.cancel()
+     * Since we pass viewModelJob, we can cancel all coroutines
+     * launched by mainScope by calling viewModelJob.cancel()
      */
     private val mainScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 

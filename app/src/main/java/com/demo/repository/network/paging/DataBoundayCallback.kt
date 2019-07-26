@@ -55,11 +55,12 @@ class DataBoundayCallback(
      */
     private fun insertItemsIntoDb(
         offset: Int,
-        response: List<DeliveryData>?
+        response: List<DeliveryData>?, it: PagingRequestHelper.Request.Callback
     ) {
         appExecutors.diskIO(object : NewTask {
-            override fun executeTask() {
+            override fun execute() {
                 handleResponse(offset, response)
+                it.recordSuccess()
             }
         }, scope)
     }
@@ -88,8 +89,7 @@ class DataBoundayCallback(
                     response: Response<List<DeliveryData>>
                 ) {
                     if (response.code() == 200) {
-                        insertItemsIntoDb(offset, response.body())
-                        it.recordSuccess()
+                        insertItemsIntoDb(offset, response.body(), it)
                     } else {
                         onFailure(call, Throwable(response.message()))
                     }

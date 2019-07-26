@@ -48,6 +48,10 @@ android {
         dev {
         }
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/commonTest/java"
+        test.java.srcDirs += "src/commonTest/java"
+    }
 }
 
 dependencies {
@@ -56,16 +60,28 @@ dependencies {
     implementation deps.androidx_appcompat
     implementation deps.androidx_ktx
     implementation deps.constraintlayout
-    testImplementation deps.junit
+
     androidTestImplementation deps.test_runner
     androidTestImplementation deps.espresso_core
+    androidTestImplementation deps.retrofit.mock
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.ext_junit
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.mockito.android
+    androidTestImplementation deps.lifecycle.testing
 
+    testImplementation deps.junit
+    testImplementation deps.mockito.core
+    testImplementation deps.room.testing
+    testImplementation deps.lifecycle.testing
+
+    implementation deps.espresso_ideling
 
     //room
     implementation deps.room.runtime
     kapt deps.room.compiler
     implementation deps.room.ktx
-    testImplementation deps.room.testing
+
 
     //dagger
     implementation deps.dagger.coredagger
@@ -84,7 +100,8 @@ dependencies {
     //lifecycle viewmodel and livedata
     implementation deps.lifecycle.extensions
     kapt deps.lifecycle.compiler
-    testImplementation deps.lifecycle.testing
+    implementation deps.lifecycle.livedata_kotlin
+
 
 
     //glide
