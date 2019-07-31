@@ -1,24 +1,29 @@
-package com.demo.ui
+package com.demo.ui.home
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import com.demo.BuildConfig
-import com.demo.repository.network.paging.DeliveryDataSourceFactory
+import com.demo.repository.Repository
+import com.demo.repository.datasourcefactory.NetworkState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
-class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSourceFactory) : ViewModel() {
+class HomeViewModel @Inject constructor(val repository: Repository, app: Application) : ViewModel() {
     private val index = MutableLiveData<Int>()
     private val repoResult = map(index) {
-        repository.getUserByRange(it, BuildConfig.PAGE_SIZE)
+        repository.getDeliveryDataByRange(it, BuildConfig.PAGE_SIZE)
     }
-    val usersData = switchMap(repoResult) { it.pagedList }!!
-    val networkState = switchMap(repoResult, { it.networkState })!!
-    val refreshState = switchMap(repoResult, { it.refreshState })!!
+    val usersData = switchMap(repoResult) { it.pagedList }
+    val networkState = switchMap(repoResult) { it.networkState }
+    val refreshState = switchMap(repoResult) { it.refreshState }
+    val dataState = switchMap(repoResult) { it.dataState } as MutableLiveData<Boolean>
+    var isNetworkErrorDisplayed: Boolean = false
+    var isRefreshErrorDisplayed: Boolean = false
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -27,7 +32,7 @@ class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSour
     private val viewModelJob = SupervisorJob()
 
     /**
-     * This is the main scope for all coroutines launched by DeliveryMainViewModel.
+     * This is the main scope for all coroutines launched by HomeViewModel.
      * Since we pass viewModelJob, we can cancel all coroutines
      * launched by mainScope by calling viewModelJob.cancel()
      */
@@ -37,11 +42,14 @@ class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSour
         repository.resetCoroutineScope(mainScope)
     }
 
-    fun refresh() {
+    fun refresh(): Boolean {
+        if (checkIfAnyStateIsLoading()) return false
         repoResult.value?.refresh?.invoke()
+        return true
     }
 
     fun showItemsFrom(position: Int): Boolean {
+        resetDataState()
         if (index.value == position) {
             return false
         }
@@ -49,9 +57,20 @@ class DeliveryMainViewModel @Inject constructor(val repository: DeliveryDataSour
         return true
     }
 
-    fun retry() {
-        val listing = repoResult?.value
+    fun retry(): Boolean {
+        if (checkIfAnyStateIsLoading()) return false
+        val listing = repoResult.value
         listing?.retry?.invoke()
+        return true
+    }
+
+    private fun checkIfAnyStateIsLoading(): Boolean {
+        return networkState.value == NetworkState.LOADING ||
+                refreshState.value == NetworkState.LOADING
+    }
+
+    private fun resetDataState() {
+        dataState.value = false
     }
 
     /**

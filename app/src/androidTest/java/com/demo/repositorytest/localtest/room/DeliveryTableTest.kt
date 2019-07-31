@@ -1,4 +1,4 @@
-package com.demo.repositorytest.localtest
+package com.demo.repositorytest.localtest.room
 
 
 import android.content.Context
@@ -6,21 +6,36 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.demo.TestDeliveryApi
-import com.demo.repository.local.database.DeliveryDatabase
+import com.demo.repository.db.dao.DeliveryDao
+import com.demo.repository.db.database.DeliveryDatabase
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 
 
 @RunWith(AndroidJUnit4::class)
-class RoomTest {
+class DeliveryTableTest {
 
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    private var db = Room.inMemoryDatabaseBuilder(
-        context, DeliveryDatabase::class.java
-    ).build()
-    private var deliveryDao = db.getDeliveryDao()
+    private lateinit var deliveryDao: DeliveryDao
+    private lateinit var db: DeliveryDatabase
 
+    @Before
+    fun setup() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(
+            context, DeliveryDatabase::class.java
+        ).build()
+        deliveryDao = db.getDeliveryDao()
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun tearDown() {
+        db.close()
+    }
 
     @Test
     @Throws(Exception::class)

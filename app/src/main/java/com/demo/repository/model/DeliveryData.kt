@@ -1,4 +1,4 @@
-package com.demo.repository.local
+package com.demo.repository.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,7 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "userdata", primaryKeys = ["id", "indexInResponse"])
+@Entity(tableName = "deliverydata", primaryKeys = ["id", "indexInResponse"])
 data class DeliveryData(
 
     val id: Int,
@@ -27,7 +27,9 @@ data class DeliveryData(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<DeliveryData> = object : Parcelable.Creator<DeliveryData> {
-            override fun createFromParcel(source: Parcel): DeliveryData = DeliveryData(source)
+            override fun createFromParcel(source: Parcel): DeliveryData =
+                DeliveryData(source)
+
             override fun newArray(size: Int): Array<DeliveryData?> = arrayOfNulls(size)
         }
     }

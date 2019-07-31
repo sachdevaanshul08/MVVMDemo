@@ -8,6 +8,7 @@ import org.intellij.lang.annotations.MagicConstant
 object Constants {
     const val EMPTY_STRING = ""
     const val DELIVERY_DATA = "DELIVERY_DATA"
+    const val MAP_ZOOM = 12.0F
 }
 
 

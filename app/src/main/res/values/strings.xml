@@ -5,9 +5,29 @@
 
     <!-- Details screen strings-->
     <string name="title_Delivery_screen">Delivery Details</string>
+    <string name="delivery_item">%1$s at %2$s</string>
+    <string name="reload_map">No Network!!  \nClick to Reload</string>
+    <string name="offline_map">You are offline!!\n Showing cached</string>
 
     <!-- Main screen lis item strings-->
     <string name="main_list_item_image">Image Description</string>
     <string name="retry">Retry</string>
+
+    <string name="no_data_found">No more data found</string>
+
+    <string name="online_messsage">You are back online!!</string>
+    <string name="offline_message">Connection lost!! Please check your internet</string>
+
+
+    <!--Network messages-->
+    <!--CODES-->
+    <string name="_401">Bad Request</string>
+    <string name="_500">Internal server error</string>
+    <!--Exceptions-->
+    <string name="no_network">Please check you internet connection and try again!!</string>
+    <!--Default-->
+    <string name="something_went_wrong">Something went wrong\n Please try Again!!</string>
+
+    <string name="loading_in_progress">Loading is in progress.. Please wait</string>
 
 </resources>

@@ -1,18 +1,19 @@
-package com.demo.repository.local
+package com.demo.repository.model
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class LocationData(
-    @SerializedName("lat") val lat: Double,
+    @SerializedName("lat") var lat: Double,
     @SerializedName("lng") val lng: Double,
     @SerializedName("address") val address: String
 ) : Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<LocationData> = object : Parcelable.Creator<LocationData> {
-            override fun createFromParcel(source: Parcel): LocationData = LocationData(source)
+            override fun createFromParcel(source: Parcel): LocationData =
+                LocationData(source)
             override fun newArray(size: Int): Array<LocationData?> = arrayOfNulls(size)
         }
     }

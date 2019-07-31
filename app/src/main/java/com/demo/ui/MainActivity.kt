@@ -7,12 +7,11 @@ import androidx.fragment.app.Fragment
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
 import com.demo.ui.base.BaseFragment
+import com.demo.ui.home.HomeFragment
 import dagger.android.support.DaggerAppCompatActivity
 
 
 class MainActivity : DaggerAppCompatActivity() {
-
-    val fragmentTag = "FRAGMENT_TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +28,16 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun initListeners(binding: ActivityMainBinding) {
+    private fun initListeners(binding: ActivityMainBinding) =
         binding.toolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 onBackPressed()
             }
         })
-    }
 
 
     fun openFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().add(R.id.frame_container, fragment, fragmentTag)
+        supportFragmentManager.beginTransaction().add(R.id.frame_container, fragment)
             .addToBackStack(null).commit()
     }
 
@@ -54,6 +52,11 @@ class MainActivity : DaggerAppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
+    /**
+     * This will call @visibleAgain on fragment, which will be visible AGAIN on
+     * pressing back button
+     *
+     */
     private fun triggerFragmentVisible() {
         val fragmentList = supportFragmentManager.fragments
         val listIterator = fragmentList.listIterator(fragmentList.size)
@@ -63,7 +66,7 @@ class MainActivity : DaggerAppCompatActivity() {
             val fragment = listIterator.previous()
             if (fragment is BaseFragment<*>) {
                 fragment.visibleAgain()
-                break;
+                break
             }
         }
     }

@@ -1,6 +1,7 @@
-package com.demo.repository.network.paging
+package com.demo.repository.datasourcefactory
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 
 /**
@@ -14,6 +15,8 @@ data class Listing<T>(
     // represents the refresh status to show to the user. Separate from networkState, this
     // value is importantly only when refresh is requested.
     val refreshState: LiveData<NetworkState>,
+    // Tells the observers if no more data is available
+    val dataState: MutableLiveData<Boolean>,
     // refreshes the whole data and fetches it from scratch.
     val refresh: () -> Unit,
     // retries any failed requests.

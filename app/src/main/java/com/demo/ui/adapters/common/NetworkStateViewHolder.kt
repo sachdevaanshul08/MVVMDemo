@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
 import com.demo.databinding.NetworkStateItemBinding
-import com.demo.repository.network.paging.NetworkState
+import com.demo.repository.datasourcefactory.NetworkState
 import com.demo.util.Status
 
 
@@ -34,9 +34,9 @@ class NetworkStateViewHolder(
         binding?.retryButton?.visibility = toVisibility(networkState?.status == Status.FAILED)
         binding?.errorMsg?.visibility = toVisibility(networkState?.msg != null)
         binding?.errorMsg?.text = networkState?.msg
-    }//binding?.networkstate=networkState }
+    }
 
-    fun toVisibility(constraint: Boolean): Int {
+   private fun toVisibility(constraint: Boolean): Int {
         return if (constraint) {
             View.VISIBLE
         } else {

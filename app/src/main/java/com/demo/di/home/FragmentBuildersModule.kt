@@ -1,7 +1,8 @@
 package com.demo.di.home
 
-import com.demo.ui.DetailFragment
-import com.demo.ui.HomeFragment
+import com.demo.di.map.MapViewModelModule
+import com.demo.ui.map.MapDetailFragment
+import com.demo.ui.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -11,6 +12,6 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
 
-    @ContributesAndroidInjector
-    abstract fun contributeDetailsFragment(): DetailFragment
+    @ContributesAndroidInjector(modules = [MapViewModelModule::class])
+    abstract fun contributeDetailsFragment(): MapDetailFragment
 }

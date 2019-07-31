@@ -7,10 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
 import com.demo.databinding.ListItemBinding
-import com.demo.repository.local.DeliveryData
+import com.demo.repository.model.DeliveryData
 
 /**
- * A RecyclerView ViewHolder that displays a reddit post.
+ * A RecyclerView ViewHolder that displays a delivery Items.
  */
 class DeliveryDataViewHolder(view: View, listItemBinding: ListItemBinding, private val onItemClick: (DeliveryData?) -> Unit) :
     RecyclerView.ViewHolder(view) {

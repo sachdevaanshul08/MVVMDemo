@@ -3,8 +3,8 @@ package com.demo.di
 import android.app.Application
 import androidx.room.Room
 import com.demo.BuildConfig
-import com.demo.repository.local.dao.DeliveryDao
-import com.demo.repository.local.database.DeliveryDatabase
+import com.demo.repository.db.dao.DeliveryDao
+import com.demo.repository.db.database.DeliveryDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -26,5 +26,4 @@ class AppModule {
     fun providesDeliveryDao(db: DeliveryDatabase): DeliveryDao {
         return db.getDeliveryDao()
     }
-
 }

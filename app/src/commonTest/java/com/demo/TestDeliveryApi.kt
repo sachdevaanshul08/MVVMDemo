@@ -1,7 +1,7 @@
 package com.demo
 
-import com.demo.repository.local.DeliveryData
-import com.demo.repository.network.user.api.DeliveryApi
+import com.demo.repository.model.DeliveryData
+import com.demo.repository.network.api.DeliveryApi
 import retrofit2.Call
 import retrofit2.mock.Calls
 import java.io.IOException

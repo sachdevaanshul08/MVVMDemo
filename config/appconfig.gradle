@@ -2,8 +2,9 @@ android {
     defaultConfig {
         buildConfigField "long", "READ_TIMEOUT", "30"
         buildConfigField "long", "CONNECTION_TIMEOUT", "30"
-        buildConfigField "String", "DATABASE_NAME", '"user.db"'
+        buildConfigField "String", "DATABASE_NAME", '"delivery.db"'
         buildConfigField "int", "PAGE_SIZE", "20"
+        buildConfigField "int", "DATABASE_VERSION", "1"
         resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
     }
 }

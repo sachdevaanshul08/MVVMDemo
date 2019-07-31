@@ -5,12 +5,12 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
-import com.demo.repository.local.DeliveryData
-import com.demo.repository.network.paging.NetworkState
+import com.demo.repository.model.DeliveryData
+import com.demo.repository.datasourcefactory.NetworkState
 import com.demo.ui.adapters.common.NetworkStateViewHolder
 
 /**
- * A simple adapter implementation that shows Reddit posts.
+ * A PagedList adapter implementation that shows Delivery Items.
  */
 class DeliveryListAdapter(
     private val onItemClick: (DeliveryData?) -> Unit,
@@ -64,6 +64,12 @@ class DeliveryListAdapter(
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
 
+    /**
+     * Add or remove the last item (Loader) in recyclerview
+     * based on the network state
+     *
+     * @param newNetworkState
+     */
     fun setNetworkState(newNetworkState: NetworkState?) {
         val previousState = this.networkState
         val hadExtraRow = hasExtraRow()

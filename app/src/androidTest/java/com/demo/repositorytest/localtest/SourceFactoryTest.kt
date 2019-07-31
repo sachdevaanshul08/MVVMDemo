@@ -9,16 +9,19 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.demo.BaseApplication
 import com.demo.TestDeliveryApi
-import com.demo.repository.local.DeliveryData
-import com.demo.repository.local.dao.DeliveryDao
-import com.demo.repository.local.database.DeliveryDatabase
-import com.demo.repository.network.paging.AppExecutors
-import com.demo.repository.network.paging.DeliveryDataSourceFactory
-import com.demo.repository.network.paging.Listing
-import com.demo.repository.network.paging.NetworkState
-import com.demo.ui.DeliveryMainViewModel
+import com.demo.repository.Repository
+import com.demo.repository.datasourcefactory.DataSource
+import com.demo.repository.datasourcefactory.Listing
+import com.demo.repository.datasourcefactory.NetworkState
+import com.demo.repository.db.dao.DeliveryDao
+import com.demo.repository.db.database.DeliveryDatabase
+import com.demo.repository.model.DeliveryData
+import com.demo.ui.home.HomeViewModel
 import com.demo.util.EspressoTestingIdlingResource
+import com.demo.util.HttpErrorCodeMapper
+import com.demo.util.executors.AppExecutors
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,25 +41,30 @@ class SourceFactoryTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val deliveryApi = TestDeliveryApi()
-    var appExecutors: AppExecutors = AppExecutors(Executors.newSingleThreadExecutor())
-    var deliveryDataSourceFactory: DeliveryDataSourceFactory? = null
-    var deliveryMainViewModel: DeliveryMainViewModel? = null
-    private var deliveryDao: DeliveryDao? = null
+    var deliveryMainViewModel: HomeViewModel? = null
+    //Late initializers
+    private lateinit var deliveryDao: DeliveryDao
+    private lateinit var db: DeliveryDatabase
+    private lateinit var repository: Repository
 
+    private val deliveryApi = TestDeliveryApi()
+    var appExecutors: AppExecutors =
+        AppExecutors(Executors.newSingleThreadExecutor())
 
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val deliveryDatabase = Room.inMemoryDatabaseBuilder(
+        IdlingRegistry.getInstance().register(EspressoTestingIdlingResource.getIdlingResource())
+        db = Room.inMemoryDatabaseBuilder(
             context, DeliveryDatabase::class.java
         ).build()
-        IdlingRegistry.getInstance().register(EspressoTestingIdlingResource.getIdlingResource())
-        deliveryDataSourceFactory = DeliveryDataSourceFactory(
-            deliveryDatabase, deliveryDatabase.getDeliveryDao(), deliveryApi, appExecutors
+        repository = Repository(
+            DataSource(
+                db, db.getDeliveryDao(), deliveryApi, appExecutors, HttpErrorCodeMapper(context as BaseApplication)
+            )
         )
-        deliveryMainViewModel = DeliveryMainViewModel(deliveryDataSourceFactory!!)
-        deliveryDao = deliveryDatabase.getDeliveryDao()
+        deliveryMainViewModel = HomeViewModel(repository, context)
+        deliveryDao = db.getDeliveryDao()
     }
 
     @After
@@ -65,21 +73,18 @@ class SourceFactoryTest {
         IdlingRegistry.getInstance().unregister(EspressoTestingIdlingResource.getIdlingResource())
     }
 
-    /**
-     * Check if the data is loaded from network, if not in database
-     */
+
+    //Check if the data is loaded from network, if not in database
     @Test
     fun fetchDataFromNetwork() {
         val latch = CountDownLatch(2)
-        deliveryMainViewModel?.showItemsFrom(0)///deliveryDataSourceFactory?.getUserByRange(0, 10)
+        deliveryMainViewModel?.showItemsFrom(0)///repository?.getDeliveryDataByRange(0, 10)
         observePagedList(deliveryMainViewModel?.usersData!!, latch)
         latch.await()
         assertThat(deliveryMainViewModel?.usersData?.value?.size, `is`(20))
     }
 
-    /**
-     * extract the latest paged list from the listing
-     */
+    // extract the latest paged list from the listing
     private fun observePagedList(
         listing: Listing<DeliveryData>, latch: CountDownLatch?
     ) {
@@ -89,9 +94,8 @@ class SourceFactoryTest {
 
     }
 
-    /**
-     * extract the latest paged list from the listing
-     */
+
+    //extract the latest paged list from the listing
     private fun observePagedList(
         listing: LiveData<PagedList<DeliveryData>>, latch: CountDownLatch?
     ) {
@@ -108,24 +112,22 @@ class SourceFactoryTest {
         //Insert the data in database
         deliveryApi.initiateDataModel(10, "Testing")
         val rawData = deliveryApi.getDeliveryDataByRange(0, 10)
-        deliveryDao?.insert(rawData)
+        deliveryDao.insert(rawData)
         //Request the data from datasourcefactory
-        val listing = deliveryDataSourceFactory?.getUserByRange(0, 10)
+        val listing = repository.getDeliveryDataByRange(0, 10)
         //trigger the data fetch
-        observePagedList(listing!!, null)
+        observePagedList(listing, null)
         //We don't need latch here, since data is present in the database beforehand
         assertThat(listing.pagedList.value?.size, `is`(10))
     }
 
-    /**
-     * asserts the failure message when the load failures
-     **/
+    // asserts the failure message when the load failures
     @Test
     fun failureHandling() {
         deliveryApi.resetFailureMsg()
         deliveryApi.failureMsg = "Something went wrong"
-        val listing = deliveryDataSourceFactory?.getUserByRange(0, 20)
-        observePagedList(listing!!, null)
+        val listing = repository.getDeliveryDataByRange(0, 20)
+        observePagedList(listing, null)
         observeNetworkState(
             listing,
             null
@@ -133,18 +135,15 @@ class SourceFactoryTest {
         assertThat(listing.networkState.value, `is`(NetworkState.error("Something went wrong")))
     }
 
-    /**
-     * extract the latest network state from the listing
-     **/
+
+    // extract the latest network state from the listing
     private fun observeNetworkState(listing: Listing<DeliveryData>, latch: CountDownLatch?) {
         val networkObserver = TestObserver<NetworkState>(latch)
         listing.networkState.observeForever(networkObserver)
     }
 
 
-    /**
-     * simple observer that logs the latest value it receives
-     */
+    //simple observer that logs the latest value it receives
     private class TestObserver<T>(latch: CountDownLatch?) : Observer<T> {
         var value: T? = null
         val lat: CountDownLatch? = latch
@@ -154,15 +153,13 @@ class SourceFactoryTest {
         }
     }
 
-    /**
-     * asserts the retry logic when fetch request fails
-     */
+    // asserts the retry logic when fetch request fails
     @Test
     fun retryIfFetchFailed() {
         val latch = CountDownLatch(2)
         deliveryApi.failureMsg = "Something went wrong"
-        val listing = deliveryDataSourceFactory?.getUserByRange(0, 10)
-        observePagedList(listing!!, latch)
+        val listing = repository.getDeliveryDataByRange(0, 10)
+        observePagedList(listing, latch)
         assertThat(listing.pagedList.value?.size, `is`(0)) //Since network failure was there, data size has to be zero
 
         @Suppress("UNCHECKED_CAST")
@@ -181,14 +178,12 @@ class SourceFactoryTest {
         inOrder.verifyNoMoreInteractions()
     }
 
-    /**
-     * asserts refresh that loads the new data
-     **/
+    // asserts refresh that loads the new data
     @Test
     fun refresh() {
         val latch = CountDownLatch(2)
-        val listing = deliveryDataSourceFactory?.getUserByRange(0, 10)
-        observePagedList(listing!!, latch)
+        val listing = repository.getDeliveryDataByRange(0, 10)
+        observePagedList(listing, latch)
         latch.await()
         assertThat(listing.pagedList.value?.size, `is`(10))
         @Suppress("UNCHECKED_CAST")

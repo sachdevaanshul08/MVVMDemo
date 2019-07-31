@@ -120,7 +120,7 @@ deps.material = "com.google.android.material:material:$versions.material"
 
 
 def googlemap = [:]
-googlemap.play_services = "com.google.android.gms:play-services:$versions.googlemap"
+googlemap.play_services = "com.google.android.gms:play-services-maps:$versions.googlemap"
 deps.googlemap = googlemap
 
 

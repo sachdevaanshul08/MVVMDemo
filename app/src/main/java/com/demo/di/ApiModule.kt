@@ -2,7 +2,7 @@ package com.demo.di
 
 import android.app.Application
 import com.demo.BuildConfig
-import com.demo.repository.network.user.api.DeliveryApi
+import com.demo.repository.network.api.DeliveryApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

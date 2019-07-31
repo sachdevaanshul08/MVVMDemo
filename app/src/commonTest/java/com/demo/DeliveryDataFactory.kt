@@ -1,7 +1,7 @@
 package com.demo
 
-import com.demo.repository.local.DeliveryData
-import com.demo.repository.local.LocationData
+import com.demo.repository.model.DeliveryData
+import com.demo.repository.model.LocationData
 import java.util.concurrent.atomic.AtomicInteger
 
 

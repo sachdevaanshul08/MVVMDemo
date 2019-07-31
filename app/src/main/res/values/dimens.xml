@@ -5,10 +5,11 @@
     <dimen name="default_description_size">18sp</dimen>
 
     <!-- Main screen list item image size-->
-    <dimen name="image_size">120dp</dimen>
+    <dimen name="image_size">100dp</dimen>
     <dimen name="main_tv_height">100dp</dimen>
 
     <!-- Details screen dimensions-->
     <dimen name="details_tv_height">40dp</dimen>
     <dimen name="map_height">200dp</dimen>
+    <dimen name="map_text_size">12sp</dimen>
 </resources>

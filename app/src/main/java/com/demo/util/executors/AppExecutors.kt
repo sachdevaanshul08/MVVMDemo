@@ -1,4 +1,4 @@
-package com.demo.repository.network.paging
+package com.demo.util.executors
 
 import android.annotation.SuppressLint
 import kotlinx.coroutines.CoroutineScope

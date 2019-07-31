@@ -4,8 +4,8 @@
 >
 
     <data>
-        <variable name="delivery" type="com.demo.repository.local.DeliveryData"/>
-
+        <variable name="delivery"
+                  type="com.demo.repository.model.DeliveryData"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -18,27 +18,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/main_tv_height">
 
-            <TextView
-                    android:text="@{delivery.description}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:textSize="@dimen/default_description_size"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_view"
-                    android:layout_margin="@dimen/default_margin"/>
-
             <ImageView
                     android:layout_width="@dimen/image_size"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/image_size"
                     android:id="@+id/image_view"
+                    android:scaleType="centerCrop"
                     app:imageUrl="@{delivery.imageUrl}"
                     android:contentDescription="@string/main_list_item_image"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                    android:text="@{@string/delivery_item(delivery.description,delivery.location.address)}"
+                    android:layout_width="0dp"
+                    android:maxLines="2"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name"
+                    android:textSize="@dimen/default_description_size"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-            />
+                    app:layout_constraintStart_toEndOf="@id/image_view"
+                    android:layout_margin="@dimen/default_margin"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
