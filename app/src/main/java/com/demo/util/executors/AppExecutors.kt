@@ -15,7 +15,7 @@ import javax.inject.Singleton
  *
  */
 @Singleton
-open class AppExecutors(private val diskIO: Executor) {
+class AppExecutors(private val diskIO: Executor) {
 
     @Inject
     constructor() : this(

@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="deliverydata"
-                  type="com.demo.repository.model.DeliveryData"/>
+                  type="com.demo.data.model.DeliveryData"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

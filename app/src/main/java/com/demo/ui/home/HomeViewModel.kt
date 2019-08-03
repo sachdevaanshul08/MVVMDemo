@@ -6,17 +6,17 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import com.demo.BuildConfig
-import com.demo.repository.Repository
-import com.demo.repository.datasourcefactory.NetworkState
+import com.demo.data.DeliveryRepo
+import com.demo.data.datasourcefactory.NetworkState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(val repository: Repository, app: Application) : ViewModel() {
+class HomeViewModel @Inject constructor(val deliveryRepo: DeliveryRepo, app: Application) : ViewModel() {
     private val index = MutableLiveData<Int>()
     private val repoResult = map(index) {
-        repository.getDeliveryDataByRange(it, BuildConfig.PAGE_SIZE)
+        deliveryRepo.getDeliveryData(it, BuildConfig.PAGE_SIZE)
     }
     val usersData = switchMap(repoResult) { it.pagedList }
     val networkState = switchMap(repoResult) { it.networkState }
@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(val repository: Repository, app: Applica
     private val mainScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
-        repository.resetCoroutineScope(mainScope)
+        deliveryRepo.resetCoroutineScope(mainScope)
     }
 
     fun refresh(): Boolean {
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(val repository: Repository, app: Applica
     fun retry(): Boolean {
         if (checkIfAnyStateIsLoading()) return false
         val listing = repoResult.value
-        listing?.retry?.invoke()
+        listing?.retry?.invoke(usersData.value?.lastOrNull())
         return true
     }
 

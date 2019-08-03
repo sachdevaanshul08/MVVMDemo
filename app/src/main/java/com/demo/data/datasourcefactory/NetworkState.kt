@@ -1,4 +1,4 @@
-package com.demo.repository.datasourcefactory
+package com.demo.data.datasourcefactory
 
 import com.demo.util.Status
 

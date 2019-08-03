@@ -8,8 +8,9 @@ import androidx.paging.PagedList
 import com.demo.R
 import com.demo.constant.Constants
 import com.demo.databinding.FragmentHomeBinding
-import com.demo.repository.datasourcefactory.NetworkState
-import com.demo.repository.model.DeliveryData
+import com.demo.data.datasourcefactory.NetworkState
+import com.demo.data.db.dao.DeliveryDao
+import com.demo.data.model.DeliveryData
 import com.demo.ui.MainActivity
 import com.demo.ui.adapters.DeliveryListAdapter
 import com.demo.ui.base.BaseFragment
@@ -20,6 +21,9 @@ import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
+
+    @Inject
+    lateinit var deliveryData: DeliveryDao
     @Inject
     lateinit var modelFactory: ViewModelFactory
 
@@ -67,6 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         })
         this.binding.swipeRefresh.setOnRefreshListener {
+
 
             //Start refresh only if other loading is not in progress
             if (!homeViewModel.refresh()) {

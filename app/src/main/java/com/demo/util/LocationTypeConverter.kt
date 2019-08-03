@@ -1,7 +1,7 @@
 package com.demo.util
 
 import androidx.room.TypeConverter
-import com.demo.repository.model.LocationData
+import com.demo.data.model.LocationData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

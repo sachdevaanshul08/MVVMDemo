@@ -1,4 +1,4 @@
-package com.demo.repository.datasourcefactory
+package com.demo.data.datasourcefactory
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,5 +20,5 @@ data class Listing<T>(
     // refreshes the whole data and fetches it from scratch.
     val refresh: () -> Unit,
     // retries any failed requests.
-    val retry: () -> Unit
+    val retry: (T?) -> Unit
 )

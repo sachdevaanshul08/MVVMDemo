@@ -21,7 +21,7 @@
 
     <!--Network messages-->
     <!--CODES-->
-    <string name="_401">Bad Request</string>
+    <string name="_400">Bad Request</string>
     <string name="_500">Internal server error</string>
     <!--Exceptions-->
     <string name="no_network">Please check you internet connection and try again!!</string>

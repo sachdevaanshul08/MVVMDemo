@@ -1,4 +1,4 @@
-package com.demo.repository.model
+package com.demo.data.model
 
 import android.os.Parcel
 import android.os.Parcelable

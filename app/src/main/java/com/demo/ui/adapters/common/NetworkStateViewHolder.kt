@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
 import com.demo.databinding.NetworkStateItemBinding
-import com.demo.repository.datasourcefactory.NetworkState
+import com.demo.data.datasourcefactory.NetworkState
 import com.demo.util.Status
 
 

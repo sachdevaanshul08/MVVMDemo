@@ -1,4 +1,4 @@
-package com.demo.connectioncallback
+package com.demo.util
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE
@@ -41,6 +41,10 @@ class ConnectionObserver(val context: Context) : LiveData<Boolean>() {
 
     }
 
+    /**
+     *
+     *
+     */
     private fun registerForLollipop() {
         val builder = NetworkRequest.Builder()
             .addTransportType(TRANSPORT_CELLULAR)
@@ -48,6 +52,11 @@ class ConnectionObserver(val context: Context) : LiveData<Boolean>() {
         connectivityManager.registerNetworkCallback(builder.build(), getConnectivityCallBack())
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     private fun getConnectivityCallBack(): ConnectivityManager.NetworkCallback {
 
         connectivityCallBack = object : ConnectivityManager.NetworkCallback() {

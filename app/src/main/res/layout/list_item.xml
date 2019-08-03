@@ -5,7 +5,7 @@
 
     <data>
         <variable name="delivery"
-                  type="com.demo.repository.model.DeliveryData"/>
+                  type="com.demo.data.model.DeliveryData"/>
     </data>
 
     <androidx.cardview.widget.CardView

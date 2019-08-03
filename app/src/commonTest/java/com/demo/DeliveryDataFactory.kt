@@ -1,3 +1,4 @@
+/*
 package com.demo
 
 import com.demo.repository.model.DeliveryData
@@ -18,3 +19,4 @@ class DeliveryDataFactory {
         )
     }
 }
+*/

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.demo.R
-import com.demo.repository.datasourcefactory.NetworkState
+import com.demo.data.datasourcefactory.NetworkState
 import com.demo.ui.MainActivity
 import com.demo.ui.home.HomeViewModel
 import com.demo.util.Status

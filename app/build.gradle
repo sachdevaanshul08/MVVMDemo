@@ -65,12 +65,10 @@ dependencies {
     androidTestImplementation deps.retrofit.mock
     androidTestImplementation deps.junit
     androidTestImplementation deps.ext_junit
-    androidTestImplementation deps.mockito.core
     androidTestImplementation deps.mockito.android
     androidTestImplementation deps.lifecycle.testing
 
-    //testImplementation deps.junit
-    testImplementation deps.mockito.core
+    testImplementation deps.mockito.inline
     testImplementation deps.room.testing
     testImplementation deps.lifecycle.testing
 

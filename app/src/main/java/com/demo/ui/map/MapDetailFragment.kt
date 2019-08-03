@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.demo.R
 import com.demo.constant.Constants
 import com.demo.databinding.FragmentDetailsBinding
-import com.demo.repository.model.DeliveryData
+import com.demo.data.model.DeliveryData
 import com.demo.ui.base.BaseFragment
 import com.demo.viewmodelsfactory.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory

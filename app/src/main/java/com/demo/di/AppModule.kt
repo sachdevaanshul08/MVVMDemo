@@ -3,8 +3,8 @@ package com.demo.di
 import android.app.Application
 import androidx.room.Room
 import com.demo.BuildConfig
-import com.demo.repository.db.dao.DeliveryDao
-import com.demo.repository.db.database.DeliveryDatabase
+import com.demo.data.db.dao.DeliveryDao
+import com.demo.data.db.database.DeliveryDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

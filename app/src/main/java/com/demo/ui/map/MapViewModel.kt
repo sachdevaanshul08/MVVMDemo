@@ -3,7 +3,7 @@ package com.demo.ui.map
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.demo.connectioncallback.ConnectionObserver
+import com.demo.util.ConnectionObserver
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(val app: Application) :

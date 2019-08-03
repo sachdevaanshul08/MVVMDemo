@@ -1,7 +1,5 @@
 package com.demo.constant
 
-import org.intellij.lang.annotations.MagicConstant
-
 /**
  * Facilitate the constants being used in internal communication of the application.
  */

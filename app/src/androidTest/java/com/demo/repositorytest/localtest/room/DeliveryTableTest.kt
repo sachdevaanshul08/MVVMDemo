@@ -1,3 +1,4 @@
+/*
 package com.demo.repositorytest.localtest.room
 
 
@@ -55,4 +56,4 @@ class DeliveryTableTest {
         val tableData = deliveryDao.getAllUser()
         assertEquals(tableData.size, 0)
     }
-}
+}*/

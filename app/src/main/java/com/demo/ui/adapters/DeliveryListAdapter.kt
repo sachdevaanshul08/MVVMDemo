@@ -5,8 +5,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
-import com.demo.repository.model.DeliveryData
-import com.demo.repository.datasourcefactory.NetworkState
+import com.demo.data.model.DeliveryData
+import com.demo.data.datasourcefactory.NetworkState
 import com.demo.ui.adapters.common.NetworkStateViewHolder
 
 /**

@@ -2,7 +2,8 @@ package com.demo.di
 
 import android.app.Application
 import com.demo.BuildConfig
-import com.demo.repository.network.api.DeliveryApi
+import com.demo.data.network.api.DeliveryApi
+import com.demo.util.networkradapter.ApiResponseAdapterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -73,6 +74,7 @@ class ApiModule {
     internal fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(ApiResponseAdapterFactory())
             .baseUrl(BuildConfig.BASEURL)
             .client(okHttpClient)
             .build()

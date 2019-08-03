@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
 import com.demo.databinding.ListItemBinding
-import com.demo.repository.model.DeliveryData
+import com.demo.data.model.DeliveryData
 
 /**
  * A RecyclerView ViewHolder that displays a delivery Items.

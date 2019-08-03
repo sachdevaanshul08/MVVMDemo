@@ -13,7 +13,6 @@ versions.junit = "4.12"
 versions.ext_junit="1.1.1"
 versions.test_runner = "1.2.0"
 versions.mockito = "2.25.0"
-versions.mockito_all = "1.10.19"
 versions.mockito_android = "2.25.0"
 versions.espresso = "3.2.0"
 versions.room = "2.1.0"
@@ -52,8 +51,8 @@ deps.espresso_ideling="androidx.test.espresso:espresso-idling-resource:$versions
 
 def mockito = [:]
 mockito.core = "org.mockito:mockito-core:$versions.mockito"
-mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
 mockito.android = "org.mockito:mockito-android:$versions.mockito_android"
+mockito.inline="org.mockito:mockito-inline:$versions.mockito"
 deps.mockito = mockito
 
 def room = [:]
